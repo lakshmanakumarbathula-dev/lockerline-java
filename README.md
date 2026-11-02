@@ -2,6 +2,16 @@
 
 A bank of 48 parcel lockers in an apartment block: couriers drop, residents collect with a code that expires.
 
+## Run it in a container
+
+You need Docker and nothing else: the image builds the app itself. From this folder:
+
+    docker build -t lockerline .
+    docker run -p 8080:8080 lockerline
+
+Open http://localhost:8080/ for the wall. `http://localhost:8080/actuator/health` answers `{"status":"UP"}` while
+the app is up and can reach its database.
+
 ## How pickup codes are stored
 
 A code has only a million possible values, so a plain hash of a leaked table is reversed in seconds. Codes are stored
@@ -24,7 +34,7 @@ useless. Because the hash is keyed but has no per-row salt, a presented code is 
 - [x] Ticket 6 · A notebook nobody can rewrite
 - [x] Ticket 7 · One file becomes an app
 - [x] Ticket 8 · The rule table, and then the rule changes
-- [ ] Ticket 9 · It runs on a machine that isn't yours
+- [x] Ticket 9 · It runs on a machine that isn't yours
 - [ ] Ticket 10 · It survives being switched off
 
 Built by Lakshmana kumar bathula on [LearnTube Guided Projects](https://guidedprojects.learntube.ai).
