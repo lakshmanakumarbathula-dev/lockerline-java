@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
-/**
- * A resident keys in a code. There is one tower, A.
- */
+/** A resident keys in a code. There is one tower, A. */
 @RestController
 public class PickupController {
 
@@ -21,7 +19,7 @@ public class PickupController {
     }
 
     @PostMapping("/pickups")
-    public void pickup(@Valid @RequestBody PickupRequest body) {
-        pickups.pickup(TOWER, body.code());
+    public PickupResponse pickup(@Valid @RequestBody PickupRequest body) {
+        return pickups.pickup(TOWER, body.code());
     }
 }

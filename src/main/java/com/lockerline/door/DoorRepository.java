@@ -36,11 +36,17 @@ public class DoorRepository {
 
     /** Every door of a tower, lowest number first. */
     public List<Row> all(long towerId) {
-        return jdbc.sql(SELECT + "WHERE d.tower_id = ? ORDER BY d.no").param(towerId).query(Row.class).list();
+        return jdbc.sql(SELECT + "WHERE d.tower_id = ? ORDER BY d.no")
+                .param(towerId)
+                .query(Row.class)
+                .list();
     }
 
     public Optional<Row> one(long towerId, String no) {
-        return jdbc.sql(SELECT + "WHERE d.tower_id = ? AND d.no = ?").params(towerId, no).query(Row.class).optional();
+        return jdbc.sql(SELECT + "WHERE d.tower_id = ? AND d.no = ?")
+                .params(towerId, no)
+                .query(Row.class)
+                .optional();
     }
 
     /** The free door of exactly this size with the lowest number, if any. */
@@ -68,6 +74,13 @@ public class DoorRepository {
     public void hold(long doorId, long parcelId) {
         jdbc.sql("UPDATE doors SET current_parcel_id = ? WHERE id = ?")
                 .params(parcelId, doorId)
+                .update();
+    }
+
+    /** Empties a door. */
+    public void free(long doorId) {
+        jdbc.sql("UPDATE doors SET current_parcel_id = NULL WHERE id = ?")
+                .param(doorId)
                 .update();
     }
 
